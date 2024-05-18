@@ -1,0 +1,5 @@
+# Установка CRLF для файлов Windows
+* text=auto eol=crlf
+
+# Установка LF для файлов Unix
+*.sh text eol=lf
