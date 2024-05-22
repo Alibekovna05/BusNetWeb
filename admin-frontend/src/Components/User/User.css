@@ -10,6 +10,9 @@
 .MuiTableRow-root:nth-child(even) {
     background-color: rgba(255, 230, 180, 0.3); /* Semi-transparent light orange */
 }
+.Table{
+    margin-top: 20px;
+}
 .Table td,
 th {
     border: none !important;

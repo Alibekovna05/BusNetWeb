@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 :root {
   --yellow: linear-gradient(180deg, #F8D49A -146.42%, #FAD79D -46.42%);
   --orange: #fca61f;
@@ -25,6 +30,7 @@
   align-items: center;
   justify-content: center;
   font-family: 'Inter', sans-serif;
+  font-size: medium;
 }
 
 .AppGlass {

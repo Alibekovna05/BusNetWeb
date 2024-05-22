@@ -25,8 +25,8 @@ export const SidebarData = [
     },
     {
         icon: UilClipboardAlt,
-        heading: "Routes",
-        path:"/routes"
+        heading: "Bus managers",
+        path:"/managers"
     },
     {
         icon: UilUsersAlt,
@@ -35,8 +35,8 @@ export const SidebarData = [
     },
     {
         icon: UilPackage,
-        heading: 'Stops',
-        path:"/stops"
+        heading: 'Bus companies',
+        path:"/companies"
     },
     {
         icon: UilChart,

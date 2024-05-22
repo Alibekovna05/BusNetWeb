@@ -30,7 +30,7 @@ export default function BasicTable() {
         if (token) {
             setAccessToken(token);
             // Fetch users from the backend API
-            axios.get("/api/users", {
+            axios.get("/api/v1/admin/users", {
                 headers: {
                     Authorization: `Bearer ${token}` // Include JWT token
                 }
@@ -54,7 +54,7 @@ export default function BasicTable() {
         setEditData(user);
     };
     const handleCreate = (userData) => {
-        axios.post("/api/users", userData, {
+        axios.post("/api/v1/admin/users", userData, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -67,7 +67,7 @@ export default function BasicTable() {
             });
     };
     const confirmDelete = (userId) => {
-        axios.delete(`/api/users/${userId}`, {
+        axios.delete(`/api/v1/admin/${userId}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -83,7 +83,7 @@ export default function BasicTable() {
 
     const handleUpdate = (updatedUserData) => {
         console.log("Updating user with data:", updatedUserData);
-        axios.put(`/api/users/${updatedUserData.id}`, updatedUserData, {
+        axios.put(`/api/v1/admin/${updatedUserData.id}`, updatedUserData, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -98,7 +98,7 @@ export default function BasicTable() {
     };
 
     const fetchUsers = () => {
-        axios.get("/api/users", {
+        axios.get("/api/v1/admin/users", {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -119,7 +119,7 @@ export default function BasicTable() {
 
     return (
         <div className="Table">
-            <h3>Users</h3>
+            <h1>Users</h1>
             <div className="add-user-button">
                 <h4>Add New User</h4>
                 <div className="add-user-icon" onClick={() => setCreateUserOpen(true)}>
