@@ -54,7 +54,7 @@ export default function BasicTable() {
         setEditData(user);
     };
     const handleCreate = (userData) => {
-        axios.post("/api/v1/admin/users", userData, {
+        axios.post("/api/v1/admin/user", userData, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
