@@ -1,10 +1,8 @@
-export type CarResponse = {
-    brand: string;
+export type BusResponse = {
+    licensePlate: string;
     model: string;
     color: string;
-    registrationNumber: string;
-    modelYear: number;
-    price: number;
+    capacity: number;
     _links: {
         self: {
             href: string;
@@ -16,4 +14,16 @@ export type CarResponse = {
             href: string;
         }
     };
+}
+
+export type Bus = {
+    licensePlate: string;
+    model: string;
+    color: string;
+    capacity: number;
+}
+
+export type BusEntry = {
+    bus: Bus;
+    url: string;
 }
