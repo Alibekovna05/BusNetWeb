@@ -22,8 +22,8 @@ const DeleteUser = ({ userId, handleDelete, handleClose }) => {
                     style={{ display: "none" }}
                 />
                 <div className="popup-buttons">
-                    <button onClick={() => handleDelete(userId)}>Yes</button>
-                    <button onClick={handleClose}>No</button>
+                    <button className="popup-button" onClick={() => handleDelete(userId)}>Yes</button>
+                    <button className="popup-button" onClick={handleClose}>No</button>
                 </div>
             </div>
         </div>

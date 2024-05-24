@@ -67,7 +67,7 @@ export default function BasicTable() {
             });
     };
     const confirmDelete = (userId) => {
-        axios.delete(`/api/v1/admin/${userId}`, {
+        axios.delete(`/api/v1/admin/user/${userId}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -83,7 +83,7 @@ export default function BasicTable() {
 
     const handleUpdate = (updatedUserData) => {
         console.log("Updating user with data:", updatedUserData);
-        axios.put(`/api/v1/admin/${updatedUserData.id}`, updatedUserData, {
+        axios.put(`/api/v1/admin/user/${updatedUserData.id}`, updatedUserData, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -116,6 +116,40 @@ export default function BasicTable() {
         setDeleteConfirm(null);
         setCreateUserOpen(false);
     };
+    const makeStyle = (status) => {
+        if (status === 'Enabled') {
+            return {
+                background: 'rgb(145 254 159 / 47%)',
+                color: 'green',
+            };
+        } else {
+            return {
+                background: '#ffadad8f',
+                color: 'red',
+            };
+        }
+    };
+
+    const makeLockStyle = (locked) => {
+        if (locked === 'Unlocked') {
+            return {
+                background: 'rgb(145 254 159 / 47%)',
+                color: 'green',
+            };
+        } else {
+            return {
+                background: '#ffadad8f',
+                color: 'red',
+            };
+        }
+    };
+    const getEnabledStatus = (enabled) => {
+        return enabled ? 'Enabled' : 'Disabled';
+    };
+
+    const getLockStatus = (locked) => {
+        return locked ? 'Locked' : 'Unlocked';
+    };
 
     return (
         <div className="Table">
@@ -132,10 +166,12 @@ export default function BasicTable() {
                         <TableHead>
                             <TableRow>
                                 <TableCell align="left">User ID</TableCell>
-                                <TableCell align="left">Username</TableCell>
+                                <TableCell align="left">Firstname</TableCell>
+                                <TableCell align="left">Lastname</TableCell>
                                 <TableCell align="left">Email</TableCell>
                                 <TableCell align="left">Password</TableCell>
-                                <TableCell align="left">Phone Number</TableCell>
+                                <TableCell align="left">Status</TableCell>
+                                <TableCell align="left">Enabled</TableCell>
                                 <TableCell align="left">Delete</TableCell>
                                 <TableCell align="left">Update</TableCell>
                             </TableRow>
@@ -144,10 +180,16 @@ export default function BasicTable() {
                             {users.map((user) => (
                                 <TableRow key={user.id} className="custom-table-row">
                                     <TableCell component="th" scope="row">{user.id}</TableCell>
-                                    <TableCell component="th" scope="row">{user.username}</TableCell>
+                                    <TableCell component="th" scope="row">{user.firstname}</TableCell>
+                                    <TableCell align="left" className="phone-cell">{user.lastname}</TableCell>
                                     <TableCell align="left">{user.email}</TableCell>
                                     <TableCell align="left" className="password-cell">{user.password}</TableCell>
-                                    <TableCell align="left" className="phone-cell">{user.phoneNumber}</TableCell>
+                                    <TableCell align="left" style={makeLockStyle(getLockStatus(user.accountLocked))}>
+                                        {getLockStatus(user.isAccountNonLocked)}
+                                    </TableCell>
+                                    <TableCell align="left" style={makeStyle(getEnabledStatus(user.enabled))}>
+                                        {getEnabledStatus(user.enabled)}
+                                    </TableCell>
                                     <TableCell align="left"><DeleteIcon className="delete-icon"
                                                                         onClick={() => handleDelete(user.id)}/></TableCell>
                                     <TableCell align="left"><EditIcon className="edit-icon"

@@ -1,11 +1,13 @@
-import  { useState } from "react";
+import { useState } from "react";
 
 const CreateUser = ({ handleCreate, handleClose }) => {
     const [userData, setUserData] = useState({
-        username: "",
+        firstname: "",
+        lastname: "",
         email: "",
         password: "",
-        phoneNumber: "",
+        enabled: false,
+        accountLocked: false,
     });
 
     const handleChange = (e) => {
@@ -13,6 +15,14 @@ const CreateUser = ({ handleCreate, handleClose }) => {
         setUserData(prevUserData => ({
             ...prevUserData,
             [name]: value
+        }));
+    };
+
+    const handleSelectChange = (e) => {
+        const { name, value } = e.target;
+        setUserData(prevUserData => ({
+            ...prevUserData,
+            [name]: value === "true"
         }));
     };
 
@@ -27,9 +37,16 @@ const CreateUser = ({ handleCreate, handleClose }) => {
                 <h2>Create New User</h2>
                 <input
                     type="text"
-                    name="username"
-                    placeholder="Username"
-                    value={userData.username}
+                    name="firstname"
+                    placeholder="Firstname"
+                    value={userData.firstname}
+                    onChange={handleChange}
+                />
+                <input
+                    type="text"
+                    name="lastname"
+                    placeholder="Lastname"
+                    value={userData.lastname}
                     onChange={handleChange}
                 />
                 <input
@@ -40,22 +57,32 @@ const CreateUser = ({ handleCreate, handleClose }) => {
                     onChange={handleChange}
                 />
                 <input
-                    type="text"
+                    type="password"
                     name="password"
                     placeholder="Password"
                     value={userData.password}
                     onChange={handleChange}
                 />
-                <input
-                    type="text"
-                    name="phoneNumber"
-                    placeholder="Phone Number"
-                    value={userData.phoneNumber}
-                    onChange={handleChange}
-                />
+
+                <select
+                    name="enabled"
+                    value={userData.enabled}
+                    onChange={handleSelectChange}
+                >
+                    <option value="true">Enabled</option>
+                    <option value="false">Disabled</option>
+                </select>
+                <select
+                    name="accountLocked"
+                    value={userData.accountLocked}
+                    onChange={handleSelectChange}
+                >
+                    <option value="true">Locked</option>
+                    <option value="false">Unlocked</option>
+                </select>
                 <div className="popup-buttons">
-                    <button onClick={handleSubmit}>Create</button>
-                    <button onClick={handleClose}>Cancel</button>
+                    <button className="popup-button" onClick={handleSubmit}>Create</button>
+                    <button className="popup-button" onClick={handleClose}>Cancel</button>
                 </div>
             </div>
         </div>

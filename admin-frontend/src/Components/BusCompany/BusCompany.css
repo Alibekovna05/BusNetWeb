@@ -1,70 +1,79 @@
-
-.MuiTableRow-root.MuiTableRow-head > * {
+/* Table Header */
+.BusCompanyTableContainerWrapper .MuiTableRow-root.MuiTableRow-head > * {
     font-weight: bold !important;
+    background-color: #007bb2 !important; /* Dark blue for header background */
+    color: white !important; /* White text for header */
 }
-.MuiTableRow-root:nth-child(odd) {
-    background-color: rgba(255, 165, 0, 0.3); /* Semi-transparent orange */
+
+/* Odd rows */
+.BusCompanyTableContainerWrapper .MuiTableRow-root:nth-child(odd) {
+    background-color: rgba(0, 123, 178, 0.1); /* Light semi-transparent blue */
 }
 
 /* Even rows */
-.MuiTableRow-root:nth-child(even) {
-    background-color: rgba(255, 230, 180, 0.3); /* Semi-transparent light orange */
+.BusCompanyTableContainerWrapper MuiTableRow-root:nth-child(even) {
+    background-color: rgba(0, 123, 178, 0.3); /* Slightly darker semi-transparent blue */
 }
-.Table{
+
+.BusCompanyTable {
     margin-top: 20px;
 }
-.Table td,
+
+.BusCompanyTable td,
 th {
     border: none !important;
 }
 
-.Table:first-child {
+.BusCompanyTable:first-child {
     border-radius: 0.7rem !important;
 }
+
 .status {
     padding: 8px;
     border-radius: 9px;
 }
 
 .Details {
-    color: #00b5ff !important;
+    color: #007bb2 !important; /* Dark blue for details link */
 }
 
 @media screen and (max-width: 1200px) {
-    .Table {
+    .BusCompanyTable {
         width: 170%;
         margin-top: 2rem;
     }
 }
 
-
 @media screen and (max-width: 768px) {
-    .Table{
+    .BusCompanyTable {
         position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
 }
-.TableContainerWrapper {
+
+.BusCompanyTableContainerWrapper {
     max-height: 600px;
     max-width: 900px;
     overflow-y: auto;
 }
-.popup {
+
+.popup-company {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #ffb491;
+    background-color: #b2d8f0; /* Light blue */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.popup h2 {
+.popup-company h2 {
     margin-top: 0;
 }
+
 .password-cell {
     max-width: 100px;
     overflow: hidden;
@@ -78,21 +87,22 @@ th {
     text-overflow: ellipsis;
 }
 
-.popup p {
+.popup-company p {
     margin-bottom: 15px;
 }
-.popup-inner {
+
+.popup-inner-company {
     font-family: 'Arial', sans-serif;
-    color: #f14a2d;
+    color: #007bb2; /* Dark blue for text */
 }
 
-.popup-buttons {
+.popup-buttons-company {
     display: flex;
     margin-top: 20px;
 }
 
-.popup-button {
-    background-color: #1070b2;
+.popup-button-company {
+    background-color: #005b82; /* Darker blue */
     color: #ffffff;
     border: none;
     padding: 10px 20px;
@@ -103,9 +113,10 @@ th {
     transition: background-color 0.3s ease;
 }
 
-.popup button {
+.popup-company button {
     margin-right: 10px;
 }
+
 .overlay {
     position: fixed;
     top: 0;
@@ -115,7 +126,8 @@ th {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
 }
-.custom-table-container {
+
+.BusCompanyTableContainerWrapper {
     box-shadow: 0px 13px 20px 0px #80808029;
 }
 
@@ -124,25 +136,27 @@ th {
     border: 0;
 }
 }
+
 input, select {
     width: 100%;
     padding: 8px;
     margin: 4px 0;
     box-sizing: border-box;
 }
-.add-user-button {
+
+.add-company-button {
     display: flex;
     justify-content: left;
     align-items: center;
 }
-.add-user-button h4
-{
+
+.add-company-buttonh4 {
     padding-right: 10px;
 }
 
-.add-user-icon {
+.add-company-icon {
     cursor: pointer;
-    background-color: orange;
+    background-color: #007bb2; /* Dark blue */
     width: 30px;
     height: 30px;
     display: flex;
@@ -152,12 +166,12 @@ input, select {
     transition: background-color 0.3s;
 }
 
-.add-user-icon:hover {
-    background-color: #ffa500;
+.add-company-icon:hover {
+    background-color: #005b82; /* Darker blue on hover */
 }
 
-.delete-icon,
-.edit-icon {
+.delete-company-icon,
+.delete-company-icon {
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -168,7 +182,7 @@ input, select {
     transition: background-color 0.3s;
 }
 
-.delete-icon:hover,
-.edit-icon:hover {
-    background-color: #ffa500;
+.delete-company-icon:hover,
+.delete-company-icon:hover {
+    background-color: #005b82;
 }
