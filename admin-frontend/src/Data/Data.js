@@ -40,8 +40,8 @@ export const SidebarData = [
     },
     {
         icon: UilChart,
-        heading: 'Analytics',
-        path:"/analytics"
+        heading: 'Bus Schedule',
+        path:"/schedule"
     },
 ];
 

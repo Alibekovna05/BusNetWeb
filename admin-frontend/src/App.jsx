@@ -6,6 +6,7 @@ import Sidebar from './Components/Sidebar/Sidebar';
 import Users from './Components/User/User';
 import Login from './Components/Auth/Login';
 import Register from './Components/Auth/Register';
+import BusSchedule from './Components/BusSchedule/BusScheduleTable';
 import BusCompany from './Components/BusCompany/BusCompanyTable';
 import axios from 'axios';
 
@@ -27,6 +28,7 @@ function App() {
                     <Route path="/login" element={<Login/>} />
                     <Route path="/companies" element={<BusCompany/>} />
                     <Route path="/register" element={<Register/>} />
+                    <Route path="/schedule" element={<BusSchedule/>} />
                 </Routes>
                  {!hideSidebarAndRightSide && <RightSide/>}
             </div>
