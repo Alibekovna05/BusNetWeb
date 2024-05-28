@@ -29,12 +29,17 @@ export default function BusScheduleTable() {
 
     const fetchAllBusSchedules = async () => {
         try {
-            const response = await axios.get('/bus-schedules');
+            const response = await axios.get('/api/v1/bus-schedules', {
+                headers: {
+                    Authorization: `Bearer ${accessToken}` // Include JWT token
+                }
+            });
             setBusSchedules(response.data);
         } catch (error) {
             console.error('Error fetching bus schedules:', error);
         }
     };
+
     useEffect(() => {
         // Retrieve token from local storage
         const token = localStorage.getItem("token");
@@ -114,9 +119,14 @@ export default function BusScheduleTable() {
         setDeleteConfirm(null);
         setCreateBusScheduleOpen(false);
     };
+
     const fetchUpcomingBusSchedules = async () => {
         try {
-            const response = await axios.get('/bus-schedules/upcoming');
+            const response = await axios.get('/api/v1/bus-schedules/upcoming', {
+                headers: {
+                    Authorization: `Bearer ${accessToken}` // Include JWT token
+                }
+            });
             setBusSchedules(response.data);
         } catch (error) {
             console.error('Error fetching upcoming bus schedules:', error);
@@ -125,7 +135,11 @@ export default function BusScheduleTable() {
 
     const fetchCompletedBusSchedules = async () => {
         try {
-            const response = await axios.get('/bus-schedules/completed');
+            const response = await axios.get('/api/v1/bus-schedules/completed', {
+                headers: {
+                    Authorization: `Bearer ${accessToken}` // Include JWT token
+                }
+            });
             setBusSchedules(response.data);
         } catch (error) {
             console.error('Error fetching completed bus schedules:', error);
@@ -134,7 +148,11 @@ export default function BusScheduleTable() {
 
     const fetchInTransitBusSchedules = async () => {
         try {
-            const response = await axios.get('/bus-schedules/in-transit');
+            const response = await axios.get('/api/v1/bus-schedules/in-transit', {
+                headers: {
+                    Authorization: `Bearer ${accessToken}` // Include JWT token
+                }
+            });
             setBusSchedules(response.data);
         } catch (error) {
             console.error('Error fetching in-transit bus schedules:', error);
@@ -143,7 +161,11 @@ export default function BusScheduleTable() {
 
     const searchBusSchedules = async () => {
         try {
-            const response = await axios.get(`/bus-schedules/search?keyword=${keyword}`);
+            const response = await axios.get(`/api/v1/bus-schedules/search?keyword=${keyword}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}` // Include JWT token
+                }
+            });
             setBusSchedules(response.data);
         } catch (error) {
             console.error('Error searching bus schedules:', error);
@@ -152,7 +174,11 @@ export default function BusScheduleTable() {
 
     const sortBusSchedules = async (direction) => {
         try {
-            const response = await axios.get(`/bus-schedules/sorted?sortBy=departTime&direction=${direction}`);
+            const response = await axios.get(`/api/v1/bus-schedules/sorted?sortBy=departTime&direction=${direction}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
             setBusSchedules(response.data);
         } catch (error) {
             console.error('Error sorting bus schedules:', error);
@@ -165,7 +191,7 @@ export default function BusScheduleTable() {
             <div className="add-schedule-button">
                 <h4>Add New Bus Schedule</h4>
                 <div className="add-schedule-icon" onClick={() => setCreateBusScheduleOpen(true)}>
-                    <AddIcon/>
+                    <AddIcon />
                 </div>
             </div>
             <div className="button-group">
@@ -189,7 +215,7 @@ export default function BusScheduleTable() {
             </div>
             <div className="BusScheduleTableContainerWrapper">
                 <TableContainer component={Paper} className="schedule-table-container">
-                    <Table aria-label="simple table" className="custom-table">
+                    <Table aria-label="simple table" className="schedule-table">
                         <TableHead>
                             <TableRow>
                                 <TableCell align="left">Schedule ID</TableCell>
@@ -197,8 +223,8 @@ export default function BusScheduleTable() {
                                 <TableCell align="left">Arrival Time</TableCell>
                                 <TableCell align="left">Depart Station</TableCell>
                                 <TableCell align="left">Arrival Station</TableCell>
-                                <TableCell align="left">Bus ID</TableCell>
-                                <TableCell align="left">Company ID</TableCell>
+                                <TableCell align="left">Bus Number</TableCell>
+                                <TableCell align="left">Bus Company</TableCell>
                                 <TableCell align="left">Total Seats</TableCell>
                                 <TableCell align="left">Available Seats</TableCell>
                                 <TableCell align="left">Price</TableCell>
@@ -208,38 +234,42 @@ export default function BusScheduleTable() {
                         </TableHead>
                         <TableBody>
                             {busSchedules.map((busSchedule) => (
-                                <TableRow key={busSchedule.id} className="custom-table-row">
-                                    <TableCell component="th" scope="row">{busSchedule.id}</TableCell>
-                                    <TableCell align="left">{busSchedule.departTime}</TableCell>
-                                    <TableCell align="left">{busSchedule.arrivalTime}</TableCell>
-                                    <TableCell align="left">{busSchedule.departStationId}</TableCell>
-                                    <TableCell align="left">{busSchedule.arrivalStationId}</TableCell>
-                                    <TableCell align="left">{busSchedule.busId}</TableCell>
-                                    <TableCell align="left">{busSchedule.busCompanyId}</TableCell>
+                                <TableRow key={busSchedule.scheduleId}>
+                                    <TableCell align="left">{busSchedule.id}</TableCell>
+                                    <TableCell align="left">{new Date(busSchedule.departTime).toLocaleString()}</TableCell>
+                                    <TableCell align="left">{new Date(busSchedule.arrivalTime).toLocaleString()}</TableCell>
+                                    <TableCell align="left">{busSchedule.departStation}</TableCell>
+                                    <TableCell align="left">{busSchedule.arrivalStation}</TableCell>
+                                    <TableCell align="left">{busSchedule.busNumber}</TableCell>
+                                    <TableCell align="left">{busSchedule.busCompanyName}</TableCell>
                                     <TableCell align="left">{busSchedule.totalSeats}</TableCell>
                                     <TableCell align="left">{busSchedule.availableSeats}</TableCell>
                                     <TableCell align="left">{busSchedule.price}</TableCell>
-                                    <TableCell align="left"><DeleteIcon className="delete-schedule-icon"
-                                                                        onClick={() => handleDelete(busSchedule.id)}/></TableCell>
-                                    <TableCell align="left"><EditIcon className="edit-schedule-icon"
-                                                                      onClick={() => handleEdit(busSchedule)}/></TableCell>
+                                    <TableCell align="left">
+                                        <div className="delete-icon" onClick={() => handleDelete(busSchedule.scheduleId)}>
+                                            <DeleteIcon />
+                                        </div>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <div className="edit-icon" onClick={() => handleEdit(busSchedule)}>
+                                            <EditIcon />
+                                        </div>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {editData && (
-                    <UpdateBusSchedule busScheduleData={editData} handleUpdate={handleUpdate}
-                                       handleClose={handleClose}/>
-                )}
-                {deleteConfirm && (
-                    <DeleteBusSchedule busScheduleId={deleteConfirm} confirmDelete={confirmDelete}
-                                       handleClose={handleClose}/>
-                )}
-                {createBusScheduleOpen && (
-                    <CreateBusSchedule handleCreate={handleCreate} handleClose={handleClose}/>
-                )}
             </div>
+            {editData && (
+                <UpdateBusSchedule busSchedule={editData} onClose={handleClose} onSave={handleUpdate} />
+            )}
+            {createBusScheduleOpen && (
+                <CreateBusSchedule onClose={handleClose} onCreate={handleCreate} />
+            )}
+            {deleteConfirm && (
+                <DeleteBusSchedule busScheduleId={deleteConfirm} onClose={handleClose} onDelete={confirmDelete} />
+            )}
         </div>
     );
 }

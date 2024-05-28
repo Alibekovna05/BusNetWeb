@@ -32,19 +32,19 @@
     border: 1px solid #004d40;
 }
 
-.custom-table {
+.schedule-table {
     min-width: 650px;
 }
 
-.custom-table thead {
+.schedule-table thead {
     background-color: #004d40;
 }
 
-.custom-table thead th {
+.schedule-table thead th {
     color: white;
 }
 
-.custom-table-row:hover {
+.schedule-table-row:hover {
     background-color: #e0f2f1;
 }
 

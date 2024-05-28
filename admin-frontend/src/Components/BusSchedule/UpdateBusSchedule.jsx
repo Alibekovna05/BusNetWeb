@@ -1,97 +1,147 @@
-import React, { useState, useEffect } from "react";
+import  { useState } from "react";
 
-const UpdateBusSchedule = ({ busScheduleData, handleUpdate, handleClose }) => {
-    const [updatedBusScheduleData, setUpdatedBusScheduleData] = useState(busScheduleData);
+const statusOptions = [
+    "UPCOMING",
+    "DELAYED",
+    "CANCELLED",
+    "IN_PROGRESS",
+    "COMPLETED"
+];
 
-    useEffect(() => {
-        setUpdatedBusScheduleData(busScheduleData);
-    }, [busScheduleData]);
+export default function UpdateBusSchedule({ busSchedule, onClose, onSave }) {
+    const [formData, setFormData] = useState({
+        ...busSchedule,
+        status: busSchedule.status || "UPCOMING" // default to UPCOMING if status is not defined
+    });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setUpdatedBusScheduleData((prevData) => ({
+        setFormData((prevData) => ({
             ...prevData,
-            [name]: value,
+            [name]: value
         }));
     };
 
-    const handleSubmit = () => {
-        handleUpdate(updatedBusScheduleData);
-        handleClose();
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onSave(formData);
+        onClose();
     };
 
     return (
         <div className="popup-schedule">
             <div className="popup-inner-schedule">
-                <h2>Update Bus Schedule</h2>
-                <input
-                    type="datetime-local"
-                    name="departTime"
-                    placeholder="Depart Time"
-                    value={updatedBusScheduleData.departTime}
-                    onChange={handleChange}
-                />
-                <input
-                    type="datetime-local"
-                    name="arrivalTime"
-                    placeholder="Arrival Time"
-                    value={updatedBusScheduleData.arrivalTime}
-                    onChange={handleChange}
-                />
-                <input
-                    type="text"
-                    name="departStationId"
-                    placeholder="Depart Station ID"
-                    value={updatedBusScheduleData.departStationId}
-                    onChange={handleChange}
-                />
-                <input
-                    type="text"
-                    name="arrivalStationId"
-                    placeholder="Arrival Station ID"
-                    value={updatedBusScheduleData.arrivalStationId}
-                    onChange={handleChange}
-                />
-                <input
-                    type="text"
-                    name="busId"
-                    placeholder="Bus ID"
-                    value={updatedBusScheduleData.busId}
-                    onChange={handleChange}
-                />
-                <input
-                    type="text"
-                    name="busCompanyId"
-                    placeholder="Bus Company ID"
-                    value={updatedBusScheduleData.busCompanyId}
-                    onChange={handleChange}
-                />
-                <input
-                    type="number"
-                    name="totalSeats"
-                    placeholder="Total Seats"
-                    value={updatedBusScheduleData.totalSeats}
-                    onChange={handleChange}
-                />
-                <input
-                    type="number"
-                    name="availableSeats"
-                    placeholder="Available Seats"
-                    value={updatedBusScheduleData.availableSeats}
-                    onChange={handleChange}
-                />
-                <input
-                    type="number"
-                    name="price"
-                    placeholder="Price"
-                    value={updatedBusScheduleData.price}
-                    onChange={handleChange}
-                />
-                <button onClick={handleSubmit}>Update</button>
-                <button onClick={handleClose}>Cancel</button>
-            </div>
+            <h2>Update Bus Schedule</h2>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Depart Time:
+                    <input
+                        type="datetime-local"
+                        name="departTime"
+                        value={new Date(formData.departTime).toISOString().slice(0, 16)}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
+                    Arrival Time:
+                    <input
+                        type="datetime-local"
+                        name="arrivalTime"
+                        value={new Date(formData.arrivalTime).toISOString().slice(0, 16)}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
+                    Depart Station:
+                    <input
+                        type="text"
+                        name="departStationName"
+                        value={formData.departStationName}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
+                    Arrival Station:
+                    <input
+                        type="text"
+                        name="arrivalStationName"
+                        value={formData.arrivalStationName}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
+                    Bus ID:
+                    <input
+                        type="text"
+                        name="busId"
+                        value={formData.busId}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
+                    Bus Company:
+                    <input
+                        type="text"
+                        name="busCompanyName"
+                        value={formData.busCompanyName}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
+                    Total Seats:
+                    <input
+                        type="number"
+                        name="totalSeats"
+                        value={formData.totalSeats}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
+                    Available Seats:
+                    <input
+                        type="number"
+                        name="availableSeats"
+                        value={formData.availableSeats}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
+                    Price:
+                    <input
+                        type="number"
+                        name="price"
+                        value={formData.price}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
+                    Status:
+                    <select
+                        name="status"
+                        value={formData.status}
+                        onChange={handleChange}
+                        required
+                    >
+                        {statusOptions.map((status) => (
+                            <option key={status} value={status}>
+                                {status}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+                <button type="submit">Save</button>
+                <button type="button" onClick={onClose}>Cancel</button>
+            </form>
+        </div>
         </div>
     );
-};
-
-export default UpdateBusSchedule;
+}
