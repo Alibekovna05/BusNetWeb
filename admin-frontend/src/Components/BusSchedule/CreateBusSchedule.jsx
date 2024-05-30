@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const CreateBusSchedule = ({ handleCreate, handleClose }) => {
+const CreateBusSchedule = ({ onCreate, onClose }) => {
     const [busScheduleData, setBusScheduleData] = useState({
         departTime: "",
         arrivalTime: "",
@@ -22,8 +22,8 @@ const CreateBusSchedule = ({ handleCreate, handleClose }) => {
     };
 
     const handleSubmit = () => {
-        handleCreate(busScheduleData);
-        handleClose();
+        onCreate(busScheduleData);
+        onClose();
     };
 
     return (
@@ -94,7 +94,7 @@ const CreateBusSchedule = ({ handleCreate, handleClose }) => {
                     onChange={handleChange}
                 />
                 <button onClick={handleSubmit}>Create</button>
-                <button onClick={handleClose}>Cancel</button>
+                <button onClick={onClose}>Cancel</button>
             </div>
         </div>
     );

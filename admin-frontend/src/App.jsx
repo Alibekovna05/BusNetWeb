@@ -8,6 +8,8 @@ import Login from './Components/Auth/Login';
 import Register from './Components/Auth/Register';
 import BusSchedule from './Components/BusSchedule/BusScheduleTable';
 import BusCompany from './Components/BusCompany/BusCompanyTable';
+import Booking from './Components/Booking/BookingsTable';
+import Payment from './Components/Payment/Payment';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:8088';
@@ -29,6 +31,8 @@ function App() {
                     <Route path="/companies" element={<BusCompany/>} />
                     <Route path="/register" element={<Register/>} />
                     <Route path="/schedule" element={<BusSchedule/>} />
+                    <Route path="/bookings" element={<Booking/>} />
+                    <Route path="/payment" element={<Payment/>} />
                 </Routes>
                  {!hideSidebarAndRightSide && <RightSide/>}
             </div>

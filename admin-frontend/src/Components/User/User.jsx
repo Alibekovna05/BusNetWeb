@@ -185,7 +185,7 @@ export default function BasicTable() {
                                     <TableCell align="left">{user.email}</TableCell>
                                     <TableCell align="left" className="password-cell">{user.password}</TableCell>
                                     <TableCell align="left" style={makeLockStyle(getLockStatus(user.accountLocked))}>
-                                        {getLockStatus(user.isAccountNonLocked)}
+                                        {getLockStatus(user.accountLocked)}
                                     </TableCell>
                                     <TableCell align="left" style={makeStyle(getEnabledStatus(user.enabled))}>
                                         {getEnabledStatus(user.enabled)}

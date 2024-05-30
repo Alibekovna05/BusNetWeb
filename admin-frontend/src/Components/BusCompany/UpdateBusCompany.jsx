@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
 
 const UpdateBusCompany = ({ busCompanyData, handleUpdate, handleClose }) => {
-    const [updatedBusCompanyData, setUpdatedBusCompanyData] = useState(busCompanyData);
+
 
     useEffect(() => {
+        console.log("Received Bus Company data in UpdateBusCompany:", busCompanyData);
         setUpdatedBusCompanyData(busCompanyData);
     }, [busCompanyData]);
+    const [updatedBusCompanyData, setUpdatedBusCompanyData] = useState({
+        id: busCompanyData.id || 0,
+        name: busCompanyData.name || "",
+        address: busCompanyData.address || "",
+        contactNumber: busCompanyData.contactNumber || "",
+        email: busCompanyData.email || "",
+    });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
