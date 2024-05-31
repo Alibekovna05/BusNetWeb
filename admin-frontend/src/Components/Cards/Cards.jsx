@@ -1,10 +1,7 @@
-
 import "./Cards.css";
-import { cardsData } from "../../Data/Data";
-
 import Card from "../Card/Card";
 
-const Cards = () => {
+const Cards = ({ cardsData }) => {
     return (
         <div className="Cards">
             {cardsData.map((card, id) => {

@@ -14,13 +14,17 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import Cards from "../Cards/Cards";
+import styles from './Payment.module.css';
+import { UilUsdSquare, UilMoneyWithdrawal, UilClipboardAlt } from "@iconscout/react-unicons";
+
 
 export default function Payment() {
     const [payments, setPayments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [accessToken, setAccessToken] = useState("");
     const [open, setOpen] = useState(false);
-    const [formData, setFormData] = useState({ bookingId: "", amount: "", status: "" });
+    const [formData, setFormData] = useState({ bookingId: 0, amount: "", status: "" });
     const [isEditing, setIsEditing] = useState(false);
     const [editId, setEditId] = useState(null);
 
@@ -53,7 +57,7 @@ export default function Payment() {
 
     const handleClose = () => {
         setOpen(false);
-        setFormData({ bookingId: "", amount: "", status: "" });
+        setFormData({ bookingId: 0, amount: "", status: "" });
         setIsEditing(false);
         setEditId(null);
     };
@@ -75,7 +79,7 @@ export default function Payment() {
                     }
                 });
             } else {
-                await axios.post('/api/v1/payments/process', formData, {
+                await axios.post(`/api/v1/payments/process?bookingId=${formData.bookingId}&amount=${formData.amount}`, formData, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
                     }
@@ -108,17 +112,79 @@ export default function Payment() {
         }
     };
 
+    const transformPaymentsToCardData = (payments) => {
+        const totalPaymentsSum = payments.reduce((acc, payment) => acc + payment.amount, 0);
+        const pendingPayments = payments.filter(payment => payment.status === "PENDING");
+        const completedPayments = payments.filter(payment => payment.status === "COMPLETED");
+        const pendingPaymentsSum = pendingPayments.reduce((acc, payment) => acc + payment.amount, 0);
+        const completedPaymentsSum = completedPayments.reduce((acc, payment) => acc + payment.amount, 0);
+        return [
+            {
+                title: "Total Payments",
+                color: {
+                    backGround: "linear-gradient(180deg, #4CAF50 0%, #2E7D32 100%)",
+                    boxShadow: "0px 10px 20px 0px rgba(76, 175, 80, 0.3)",
+                },
+                barValue: 100,
+                value: totalPaymentsSum.toFixed(2),  // Displaying the total sum
+                png: UilUsdSquare,
+                series: [
+                    {
+                        name: "Payments",
+                        data: payments.map(payment => payment.amount),
+                    },
+                ],
+            },
+            {
+                title: "Pending",
+                color: {
+                    backGround: "linear-gradient(180deg, #FF9800 0%, #F57C00 100%)",
+                    boxShadow: "0px 10px 20px 0px rgba(255, 152, 0, 0.3)",
+                },
+                barValue: (pendingPayments.length / payments.length) * 100,
+                value: pendingPaymentsSum.toFixed(2),  // Displaying the total sum of pending payments
+                png: UilMoneyWithdrawal,
+                series: [
+                    {
+                        name: "Pending",
+                        data: pendingPayments.map(payment => payment.amount),
+                    },
+                ],
+            },
+            {
+                title: "Completed",
+                color: {
+                    backGround: "linear-gradient(180deg, #2196F3 0%, #1976D2 100%)",
+                    boxShadow: "0px 10px 20px 0px rgba(33, 150, 243, 0.3)",
+                },
+                barValue: (completedPayments.length / payments.length) * 100,
+                value: completedPaymentsSum.toFixed(2),  // Displaying the total sum of completed payments
+                png: UilClipboardAlt,
+                series: [
+                    {
+                        name: "Completed",
+                        data: completedPayments.map(payment => payment.amount),
+                    },
+                ],
+            },
+        ];
+    };
+
+
     if (loading) {
         return <CircularProgress />;
     }
 
     return (
-        <div className="PaymentDashboard">
+        <div className={styles.PaymentDashboard}>
             <h1>Payments</h1>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Add Payment
-            </Button>
-            <TableContainer component={Paper}>
+            <div className={styles.ButtonContainer}>
+                <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                    Add Payment
+                </Button>
+            </div>
+            <Cards cardsData={transformPaymentsToCardData(payments)} />
+            <TableContainer component={Paper} className={styles.TableContainer}>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -149,7 +215,7 @@ export default function Payment() {
             </TableContainer>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">{isEditing ? "Edit Payment" : "Add Payment"}</DialogTitle>
-                <DialogContent>
+                <DialogContent className={styles.DialogContent}>
                     <TextField
                         autoFocus
                         margin="dense"
@@ -179,7 +245,7 @@ export default function Payment() {
                         onChange={handleChange}
                     />
                 </DialogContent>
-                <DialogActions>
+                <DialogActions className={styles.DialogActions}>
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
