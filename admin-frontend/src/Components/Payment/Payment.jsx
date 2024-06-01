@@ -14,17 +14,18 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import Cards from "../Cards/Cards";
 import styles from './Payment.module.css';
 import { UilUsdSquare, UilMoneyWithdrawal, UilClipboardAlt } from "@iconscout/react-unicons";
-
 
 export default function Payment() {
     const [payments, setPayments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [accessToken, setAccessToken] = useState("");
     const [open, setOpen] = useState(false);
-    const [formData, setFormData] = useState({ bookingId: 0, amount: "", status: "" });
+    const [formData, setFormData] = useState({ bookingId: 0, amount: "", status: "PENDING" });
     const [isEditing, setIsEditing] = useState(false);
     const [editId, setEditId] = useState(null);
 
@@ -57,7 +58,7 @@ export default function Payment() {
 
     const handleClose = () => {
         setOpen(false);
-        setFormData({ bookingId: 0, amount: "", status: "" });
+        setFormData({ bookingId: 0, amount: "", status: "PENDING" });
         setIsEditing(false);
         setEditId(null);
     };
@@ -79,7 +80,7 @@ export default function Payment() {
                     }
                 });
             } else {
-                await axios.post(`/api/v1/payments/process?bookingId=${formData.bookingId}&amount=${formData.amount}`, formData, {
+                await axios.post(`/api/v1/payments/create?bookingId=${formData.bookingId}&amount=${formData.amount}`, formData, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
                     }
@@ -118,6 +119,11 @@ export default function Payment() {
         const completedPayments = payments.filter(payment => payment.status === "COMPLETED");
         const pendingPaymentsSum = pendingPayments.reduce((acc, payment) => acc + payment.amount, 0);
         const completedPaymentsSum = completedPayments.reduce((acc, payment) => acc + payment.amount, 0);
+
+        const totalPaymentsLength = payments.length;
+        const pendingPaymentsLength = pendingPayments.length;
+        const completedPaymentsLength = completedPayments.length;
+
         return [
             {
                 title: "Total Payments",
@@ -141,7 +147,7 @@ export default function Payment() {
                     backGround: "linear-gradient(180deg, #FF9800 0%, #F57C00 100%)",
                     boxShadow: "0px 10px 20px 0px rgba(255, 152, 0, 0.3)",
                 },
-                barValue: (pendingPayments.length / payments.length) * 100,
+                barValue: ((pendingPaymentsLength / totalPaymentsLength) * 100).toFixed(0),  // Rounding percentage value
                 value: pendingPaymentsSum.toFixed(2),  // Displaying the total sum of pending payments
                 png: UilMoneyWithdrawal,
                 series: [
@@ -157,7 +163,7 @@ export default function Payment() {
                     backGround: "linear-gradient(180deg, #2196F3 0%, #1976D2 100%)",
                     boxShadow: "0px 10px 20px 0px rgba(33, 150, 243, 0.3)",
                 },
-                barValue: (completedPayments.length / payments.length) * 100,
+                barValue: ((completedPaymentsLength / totalPaymentsLength) * 100).toFixed(0),  // Rounding percentage value
                 value: completedPaymentsSum.toFixed(2),  // Displaying the total sum of completed payments
                 png: UilClipboardAlt,
                 series: [
@@ -169,7 +175,6 @@ export default function Payment() {
             },
         ];
     };
-
 
     if (loading) {
         return <CircularProgress />;
@@ -235,15 +240,19 @@ export default function Payment() {
                         value={formData.amount}
                         onChange={handleChange}
                     />
-                    <TextField
+                    <Select
                         margin="dense"
                         name="status"
                         label="Status"
-                        type="text"
                         fullWidth
                         value={formData.status}
                         onChange={handleChange}
-                    />
+                    >
+                        <MenuItem value="PENDING">PENDING</MenuItem>
+                        <MenuItem value="COMPLETED">COMPLETED</MenuItem>
+                        <MenuItem value="FAILED">FAILED</MenuItem>
+                        <MenuItem value="REFUNDED">REFUNDED</MenuItem>
+                    </Select>
                 </DialogContent>
                 <DialogActions className={styles.DialogActions}>
                     <Button onClick={handleClose} color="primary">
