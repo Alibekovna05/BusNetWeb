@@ -1,0 +1,43 @@
+
+.Payment {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.ButtonContainer {
+    margin-bottom: 20px;
+}
+
+.MuiButton-outlinedPrimary {
+    border-color: #1976d2;
+    color: #1976d2;
+}
+
+.TableContainer {
+    margin-top: 20px;
+}
+
+.MuiPaper-root {
+    padding: 16px;
+}
+
+.MuiTableCell-head {
+    font-weight: bold;
+}
+
+.DialogContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.DialogActions {
+    justify-content: space-between;
+}

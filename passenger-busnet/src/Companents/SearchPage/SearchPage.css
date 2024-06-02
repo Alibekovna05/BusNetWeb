@@ -1,0 +1,96 @@
+.SearchPageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    background: var(--glass);
+    border-radius: 2rem;
+    padding: 4rem 0rem;
+    box-shadow: var(--boxShadow);
+    overflow: auto;
+}
+.SearchPageHeader{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    box-shadow: var(--boxShadow);
+    border-radius: 2rem;
+    position: fixed;
+    top: 30px;
+}
+.SearchPageHeader .nav-links {
+    display: flex;
+    gap: 1rem;
+}
+.SearchPageHeader .nav-links a {
+    color: var(--darkBlue);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.SearchPageHeader .nav-links a:hover {
+    background-color: var(--orange);
+    color: white;
+}
+.search-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.search-form input {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--darkBlue);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 400px;
+}
+
+.search-button {
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 1rem;
+    background-color: var(--orange);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: darkorange;
+}
+
+.results-container {
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 2rem;
+}
+
+.result-card {
+    background: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--smboxShadow);
+    margin-bottom: 1rem;
+}
+
+.result-card h3, .result-card p {
+    margin: 0.5rem 0;
+}
+
+.result-card h3 {
+    color: var(--darkBlue);
+}
+
+.result-card p {
+    color: var(--gray);
+}

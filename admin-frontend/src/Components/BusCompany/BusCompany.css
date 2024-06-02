@@ -1,0 +1,188 @@
+
+.BusCompanyTableContainerWrapper .MuiTableRow-root.MuiTableRow-head > * {
+    font-weight: bold !important;
+    background-color: #007bb2 !important; /* Dark blue for header background */
+    color: white !important; /* White text for header */
+}
+
+/* Odd rows */
+.BusCompanyTableContainerWrapper .MuiTableRow-root:nth-child(odd) {
+    background-color: rgba(0, 123, 178, 0.1); /* Light semi-transparent blue */
+}
+
+/* Even rows */
+.BusCompanyTableContainerWrapper MuiTableRow-root:nth-child(even) {
+    background-color: rgba(0, 123, 178, 0.3); /* Slightly darker semi-transparent blue */
+}
+
+.BusCompanyTable {
+    margin-top: 20px;
+}
+
+.BusCompanyTable td,
+th {
+    border: none !important;
+}
+
+.BusCompanyTable:first-child {
+    border-radius: 0.7rem !important;
+}
+
+.status {
+    padding: 8px;
+    border-radius: 9px;
+}
+
+.Details {
+    color: #007bb2 !important; /* Dark blue for details link */
+}
+
+@media screen and (max-width: 1200px) {
+    .BusCompanyTable {
+        width: 170%;
+        margin-top: 2rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .BusCompanyTable {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.BusCompanyTableContainerWrapper {
+    max-height: 600px;
+    max-width: 900px;
+    overflow-y: auto;
+}
+
+.popup-company {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #b2d8f0; /* Light blue */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup-company h2 {
+    margin-top: 0;
+}
+
+.password-cell {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.phone-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.popup-company p {
+    margin-bottom: 15px;
+}
+
+.popup-inner-company {
+    font-family: 'Arial', sans-serif;
+    color: #007bb2; /* Dark blue for text */
+}
+
+.popup-buttons-company {
+    display: flex;
+    margin-top: 20px;
+}
+
+.popup-button-company {
+    background-color: #005b82; /* Darker blue */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-family: 'Arial Black', sans-serif;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.popup-company button {
+    margin-right: 10px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.BusCompanyTableContainerWrapper {
+    box-shadow: 0px 13px 20px 0px #80808029;
+}
+
+.custom-table-row {
+"&:last-child td, &:last-child th": {
+    border: 0;
+}
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin: 4px 0;
+    box-sizing: border-box;
+}
+
+.add-company-button {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.add-company-buttonh4 {
+    padding-right: 10px;
+}
+
+.add-company-icon {
+    cursor: pointer;
+    background-color: #007bb2; /* Dark blue */
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.add-company-icon:hover {
+    background-color: #005b82; /* Darker blue on hover */
+}
+
+.delete-company-icon,
+.delete-company-icon {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.delete-company-icon:hover,
+.delete-company-icon:hover {
+    background-color: #005b82;
+}

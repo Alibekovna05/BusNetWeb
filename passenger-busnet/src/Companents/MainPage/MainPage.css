@@ -1,0 +1,190 @@
+.MainPageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background: var(--glass);
+    border-radius: 2rem;
+    padding: 6rem 0rem;
+    box-shadow: var(--boxShadow);
+    overflow: auto;
+}
+
+.MainPageHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 20rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--boxShadow);
+    border-radius: 2rem;
+}
+.logo {
+    display: flex;
+    height: 5rem;
+    font-weight: bold;
+    font-size: 22px;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    height: 4%;
+}
+.logo > span > span {
+    color: var(--pink);
+}
+
+.logo > img {
+    width: 3rem;
+    height: 3rem;
+}
+
+.MainPageHeader .nav-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.MainPageHeader .nav-links a {
+    color: var(--darkBlue);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.MainPageHeader .nav-links a:hover {
+    background-color: var(--orange);
+    color: white;
+}
+
+.MainPageContent {
+    text-align: center;
+    width: 100%;
+    max-width: 1200px;
+    color: var(--darkBlue);
+}
+
+.MainPageContent h1 {
+    margin-bottom: 1rem;
+    color: var(--darkBlue);
+}
+
+.MainPageContent p {
+    margin-bottom: 2rem;
+    color: var(--gray);
+}
+
+.top-destinations, .special-offers, .news-updates {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.destination-card, .offer-card {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: var(--smboxShadow);
+}
+
+.destination-card img, .offer-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.destination-card:hover img, .offer-card:hover img {
+    transform: scale(1.1);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.destination-card:hover .overlay, .offer-card:hover .overlay {
+    opacity: 1;
+}
+
+.textf {
+    color: white;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.news-card {
+    background: var(--yellow);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--smboxShadow);
+    width: 300px;
+    margin: 1rem;
+    text-align: left;
+}
+
+.news-card h3 {
+    color: var(--orange);
+    margin-bottom: 0.5rem;
+}
+
+.news-card p {
+    color: var(--darkBlue);
+    margin-bottom: 0.5rem;
+}
+
+.read-more {
+    color: var(--darkBlue);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+
+.see-all {
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.see-all a {
+    color: var(--orange);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.see-all a:hover {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+    .destination-card, .offer-card, .news-card {
+        width: 100%;
+        height: auto;
+    }
+
+    .MainPageHeader {
+        flex-direction: column;
+    }
+}
