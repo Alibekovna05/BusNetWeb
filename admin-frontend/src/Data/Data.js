@@ -15,40 +15,65 @@ import {  UilMoneyWithdrawal } from "@iconscout/react-unicons";
 import img1 from "../imgs/img1.png";
 import img2 from "../imgs/img2.png";
 import img3 from "../imgs/img3.png";
-import tenge from "../imgs/tenge.png";
 
-export const SidebarData = [
+// data.js
+
+export const adminSidebarData = [
     {
         icon: UilEstate,
         heading: "Dashboard",
-        path:"/dashboard"
+        path: "/dashboard"
     },
     {
         icon: UilClipboardAlt,
         heading: "Bookings",
-        path:"/bookings"
+        path: "/bookings"
     },
     {
         icon: UilUsersAlt,
         heading: "Users",
-        path:"/users"
+        path: "/users"
     },
     {
         icon: UilPackage,
         heading: 'Bus companies',
-        path:"/companies"
+        path: "/companies"
     },
     {
         icon: UilChart,
         heading: 'Bus Schedule',
-        path:"/schedule"
+        path: "/schedule"
     },
     {
         icon: UilMoneyWithdrawal,
         heading: 'Payment',
-        path:"/payment"
+        path: "/payment"
     },
 ];
+
+export const busCompanySidebarData = [
+    {
+        icon: UilEstate,
+        heading: "My Bus Company",
+        path: "/mybuscompany"
+    },
+    {
+        icon: UilClipboardAlt,
+        heading: "Bookings",
+        path: "/bookings"
+    },
+    {
+        icon: UilChart,
+        heading: 'Bus Schedule',
+        path: "/schedule"
+    },
+    {
+        icon: UilPackage,
+        heading: 'Bus companies',
+        path: "/companies"
+    },
+];
+
 
 export const RecentData = [
     {
