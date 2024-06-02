@@ -21,24 +21,6 @@ export default function BookingsTable() {
     const [editData, setEditData] = useState(null);
     const [deleteConfirm, setDeleteConfirm] = useState(null);
     const [accessToken, setAccessToken] = useState("");
-    const [keyword, setKeyword] = useState('');
-
-    useEffect(() => {
-        fetchAllBookings();
-    }, []);
-
-    const fetchAllBookings = async () => {
-        try {
-            const response = await axios.get('/api/v1/bookings', {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            });
-            setBookings(response.data);
-        } catch (error) {
-            console.error('Error fetching bookings:', error);
-        }
-    };
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -118,30 +100,26 @@ export default function BookingsTable() {
         setCreateBookingOpen(false);
     };
 
-    const searchBookings = async () => {
+    const filterBookingsByStatus = async (status) => {
         try {
-            const response = await axios.get(`/api/v1/bookings/search?keyword=${keyword}`, {
+            const response = await axios.get(`/api/v1/bookings/status?status=${status}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
             });
             setBookings(response.data);
         } catch (error) {
-            console.error('Error searching bookings:', error);
+            console.error('Error filtering bookings by status:', error);
         }
     };
 
-    const sortBookings = async (direction) => {
-        try {
-            const response = await axios.get(`/api/v1/bookings/sorted?sortBy=date&direction=${direction}`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            });
-            setBookings(response.data);
-        } catch (error) {
-            console.error('Error sorting bookings:', error);
-        }
+    const sortBookings = (direction) => {
+        const sortedBookings = [...bookings].sort((a, b) => {
+            const dateA = new Date(a.bookingDate);
+            const dateB = new Date(b.bookingDate);
+            return direction === 'asc' ? dateA - dateB : dateB - dateA;
+        });
+        setBookings(sortedBookings);
     };
 
     return (
@@ -154,83 +132,79 @@ export default function BookingsTable() {
                 </div>
             </div>
             <div className="button-group">
-                <button onClick={fetchAllBookings}>All</button>
-            </div>
-            <div className="search-group">
-                <input
-                    type="text"
-                    placeholder="Search..."
-                    value={keyword}
-                    onChange={(e) => setKeyword(e.target.value)}
-                />
-                <button onClick={searchBookings}>Search</button>
+                <button onClick={() => fetchBookings(accessToken)}>All</button>
+                <button onClick={() => filterBookingsByStatus('PENDING_PAYMENT')}>Pending Payment</button>
+                <button onClick={() => filterBookingsByStatus('CONFIRMED')}>Confirmed</button>
+                <button onClick={() => filterBookingsByStatus('CANCELLED')}>Cancelled</button>
             </div>
             <div className="sort-group">
                 <button onClick={() => sortBookings('asc')}>Sort by Date (Asc)</button>
                 <button onClick={() => sortBookings('desc')}>Sort by Date (Desc)</button>
             </div>
-            <TableContainer component={Paper} className="table-container">
-                <Table aria-label="simple table" className="table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="left">Booking ID</TableCell>
-                            <TableCell align="left">User ID</TableCell>
-                            <TableCell align="left">Bus Schedule ID</TableCell>
-                            <TableCell align="left">Booking Date</TableCell>
-                            <TableCell align="left">QR Code Data Img</TableCell>
-                            <TableCell align="left">QR Code Data</TableCell>
-                            <TableCell align="left">Status</TableCell>
-                            <TableCell align="left">Delete</TableCell>
-                            <TableCell align="left">Update</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {bookings.map((booking) => (
-                            <TableRow key={booking.id}>
-                                <TableCell align="left">{booking.id}</TableCell>
-                                <TableCell align="left">{booking.userId}</TableCell>
-                                <TableCell align="left">{booking.busScheduleId}</TableCell>
-                                <TableCell align="left">{booking.bookingDate}</TableCell>
-                                <TableCell align="left">{booking.qrCodeDataImg}</TableCell>
-                                <TableCell align="left">{booking.qrCodeData}</TableCell>
-                                <TableCell align="left">{booking.status}</TableCell>
-                                <TableCell align="left">
-                                    <DeleteIcon
-                                        className="icon"
-                                        onClick={() => handleDelete(booking.id)}
-                                    />
-                                </TableCell>
-                                <TableCell align="left">
-                                    <EditIcon
-                                        className="icon"
-                                        onClick={() => handleEdit(booking)}
-                                    />
-                                </TableCell>
+            <div className="TableContainerWrapper">
+                <TableContainer component={Paper} className="custom-table-container">
+                    <Table aria-label="simple table" className="table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="left">Booking ID</TableCell>
+                                <TableCell align="left">User ID</TableCell>
+                                <TableCell align="left">Bus Schedule ID</TableCell>
+                                <TableCell align="left">Booking Date</TableCell>
+                                <TableCell align="left" className="short-cell">QR Code Data Img</TableCell>
+                                <TableCell align="left" className="short-cell">QR Code Data</TableCell>
+                                <TableCell align="left">Status</TableCell>
+                                <TableCell align="left">Delete</TableCell>
+                                <TableCell align="left">Update</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            {createBookingOpen && (
-                <CreateBooking
-                    onClose={handleClose}
-                    onCreate={handleCreate}
-                />
-            )}
-            {editData && (
-                <UpdateBooking
-                    data={editData}
-                    onClose={handleClose}
-                    onUpdate={handleUpdate}
-                />
-            )}
-            {deleteConfirm && (
-                <DeleteBooking
-                    bookingId={deleteConfirm}
-                    onClose={handleClose}
-                    onConfirm={confirmDelete}
-                />
-            )}
+                        </TableHead>
+                        <TableBody>
+                            {bookings.map((booking) => (
+                                <TableRow key={booking.id}>
+                                    <TableCell align="left">{booking.id}</TableCell>
+                                    <TableCell align="left">{booking.userId}</TableCell>
+                                    <TableCell align="left">{booking.busScheduleId}</TableCell>
+                                    <TableCell align="left">{booking.bookingDate}</TableCell>
+                                    <TableCell align="left" className="short-cell">{booking.qrCodeDataImg}</TableCell>
+                                    <TableCell align="left" className="short-cell">{booking.qrCodeData}</TableCell>
+                                    <TableCell align="left">{booking.status}</TableCell>
+                                    <TableCell align="left">
+                                        <DeleteIcon
+                                            className="icon"
+                                            onClick={() => handleDelete(booking.id)}
+                                        />
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <EditIcon
+                                            className="icon"
+                                            onClick={() => handleEdit(booking)}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                {createBookingOpen && (
+                    <CreateBooking
+                        onClose={handleClose}
+                        onCreate={handleCreate}
+                    />
+                )}
+                {editData && (
+                    <UpdateBooking
+                        data={editData}
+                        onClose={handleClose}
+                        onUpdate={handleUpdate}
+                    />
+                )}
+                {deleteConfirm && (
+                    <DeleteBooking
+                        bookingId={deleteConfirm}
+                        onClose={handleClose}
+                        onConfirm={confirmDelete}
+                    />
+                )}
+            </div>
         </div>
     );
 }

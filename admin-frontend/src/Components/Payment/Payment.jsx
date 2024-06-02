@@ -18,7 +18,8 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Cards from "../Cards/Cards";
 import styles from './Payment.module.css';
-import { UilUsdSquare, UilMoneyWithdrawal, UilClipboardAlt } from "@iconscout/react-unicons";
+import { UilMoneyWithdrawal, UilClipboardAlt } from "@iconscout/react-unicons";
+import tenge from "../../imgs/tenge.png";
 
 export default function Payment() {
     const [payments, setPayments] = useState([]);
@@ -80,7 +81,7 @@ export default function Payment() {
                     }
                 });
             } else {
-                await axios.post(`/api/v1/payments/create?bookingId=${formData.bookingId}&amount=${formData.amount}`, formData, {
+                await axios.post(`/api/v1/payments/create?bookingId=${formData.bookingId}&amount=${formData.amount}&status=${formData.status}`, formData, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
                     }
@@ -133,7 +134,7 @@ export default function Payment() {
                 },
                 barValue: 100,
                 value: totalPaymentsSum.toFixed(2),  // Displaying the total sum
-                png: UilUsdSquare,
+                png: tenge,
                 series: [
                     {
                         name: "Payments",

@@ -42,9 +42,13 @@ function CompactCard({ param, setExpanded }) {
                 <span>{param.title}</span>
             </div>
             <div className="detail">
-                <Png />
-                <span>${param.value}</span>
-                <span>Last 24 hours</span>
+                {typeof Png === 'string' ? (
+                    <img src={Png} alt="icon" className="icon"/>
+                ) : (
+                    <Png/>
+                )}
+                <span>{param.value} ₸</span>
+                <span></span>
             </div>
         </motion.div>
     );
@@ -120,7 +124,7 @@ function ExpandedCard({ param, setExpanded }) {
             <div className="chartContainer">
                 <Chart options={data.options} series={param.series} type="area" />
             </div>
-            <span>Last 24 hours</span>
+            <span>The graph</span>
         </motion.div>
     );
 }

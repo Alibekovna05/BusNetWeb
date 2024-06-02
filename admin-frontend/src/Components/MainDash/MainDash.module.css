@@ -32,6 +32,18 @@
 .MainDash::-webkit-scrollbar-thumb:hover {
     background: #ee9565;
 }
+h1 {
+    margin-bottom: 1rem;
+}
+
+h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.Cards {
+    margin-bottom: 2rem;
+}
 @media screen and (max-width: 1200px) {
     .MainDash{
         justify-content:flex-start;

@@ -13,7 +13,8 @@ const formatDate = (date) => {
     const day = (`0${d.getDate()}`).slice(-2);
     const hours = (`0${d.getHours()}`).slice(-2);
     const minutes = (`0${d.getMinutes()}`).slice(-2);
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
+    const seconds = (`0${d.getSeconds()}`).slice(-2);
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 };
 const CreateBooking = ({ onClose, onCreate }) => {
     const [userId, setUserId] = useState('');
@@ -46,7 +47,7 @@ const CreateBooking = ({ onClose, onCreate }) => {
                 <label>Booking Date:</label>
                 <input
                     type="datetime-local"
-                    value={formatDate(bookingDate)}
+                    value={bookingDate}
                     onChange={(e) => setBookingDate(e.target.value)}
                 />
                 <label>Status:</label>
