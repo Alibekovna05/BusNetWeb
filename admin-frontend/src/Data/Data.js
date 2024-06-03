@@ -5,6 +5,8 @@ import {
     UilUsersAlt,
     UilPackage,
     UilChart,
+    UilBusAlt,
+    UilLocationPinAlt,
 } from "@iconscout/react-unicons";
 
 
@@ -58,6 +60,11 @@ export const busCompanySidebarData = [
         path: "/mybuscompany"
     },
     {
+        icon: UilBusAlt,
+        heading: "Buses",
+        path: "/buses"
+    },
+    {
         icon: UilClipboardAlt,
         heading: "Bookings",
         path: "/bookings"
@@ -68,9 +75,9 @@ export const busCompanySidebarData = [
         path: "/schedule"
     },
     {
-        icon: UilPackage,
-        heading: 'Bus companies',
-        path: "/companies"
+        icon: UilLocationPinAlt,
+        heading: 'Bus stations',
+        path: "/stations"
     },
 ];
 
