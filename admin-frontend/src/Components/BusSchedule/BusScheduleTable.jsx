@@ -22,23 +22,9 @@ export default function BusScheduleTable() {
     const [deleteConfirm, setDeleteConfirm] = useState(null);
     const [accessToken, setAccessToken] = useState("");
     const [keyword, setKeyword] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [busStations, setBusStations] = useState([]);
 
-    useEffect(() => {
-        fetchAllBusSchedules();
-    }, []);
-
-    const fetchAllBusSchedules = async () => {
-        try {
-            const response = await axios.get('/api/v1/bus-schedules', {
-                headers: {
-                    Authorization: `Bearer ${accessToken}` // Include JWT token
-                }
-            });
-            setBusSchedules(response.data);
-        } catch (error) {
-            console.error('Error fetching bus schedules:', error);
-        }
-    };
 
     useEffect(() => {
         // Retrieve token from local storage
@@ -46,23 +32,38 @@ export default function BusScheduleTable() {
         if (token) {
             setAccessToken(token);
             // Fetch bus schedules from the backend API
-            fetchBusSchedules(token);
+            fetchAllBusSchedules(token);
+            fetchBusStations(token);
         }
     }, []);
-
-    const fetchBusSchedules = (token) => {
-        axios.get("/api/v1/bus-schedules", {
-            headers: {
-                Authorization: `Bearer ${token}` // Include JWT token
-            }
-        })
-            .then(response => {
-                setBusSchedules(response.data);
-            })
-            .catch(error => {
-                console.error("Error fetching bus schedules:", error);
+    const fetchAllBusSchedules = async (token) => {
+        try {
+            const response = await axios.get('/api/v1/bus-schedules', {
+                headers: {
+                    Authorization: `Bearer ${token}` // Include JWT token
+                }
             });
+            setBusSchedules(response.data);
+        } catch (error) {
+            console.error('Error fetching bus schedules:', error);
+        }
     };
+    const fetchBusStations = async (token) => {
+        try {
+            const response = await axios.get("/api/v1/bus-stations", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setBusStations(response.data);
+        } catch (error) {
+            console.error("Error fetching bus stations:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
 
     const handleDelete = (busScheduleId) => {
         setDeleteConfirm(busScheduleId);
@@ -79,7 +80,7 @@ export default function BusScheduleTable() {
             }
         })
             .then(() => {
-                fetchBusSchedules(accessToken);
+                fetchAllBusSchedules(accessToken);
             })
             .catch(error => {
                 console.error("Error creating bus schedule:", error);
@@ -93,7 +94,7 @@ export default function BusScheduleTable() {
             }
         })
             .then(() => {
-                fetchBusSchedules(accessToken); // Fetch bus schedules again after change
+                fetchAllBusSchedules(accessToken); // Fetch bus schedules again after change
             })
             .catch(error => {
                 console.error("Error deleting bus schedule:", error);
@@ -107,7 +108,7 @@ export default function BusScheduleTable() {
             }
         })
             .then(() => {
-                fetchBusSchedules(accessToken); // Fetch bus schedules again
+                fetchAllBusSchedules(accessToken); // Fetch bus schedules again
             })
             .catch(error => {
                 console.error("Error updating bus schedule:", error);
@@ -158,6 +159,18 @@ export default function BusScheduleTable() {
             console.error('Error fetching in-transit bus schedules:', error);
         }
     };
+    const fetchBusSchedules = async () => {
+        try {
+            const response = await axios.get('/api/v1/bus-schedules', {
+                headers: {
+                    Authorization: `Bearer ${accessToken}` // Include JWT token
+                }
+            });
+            setBusSchedules(response.data);
+        } catch (error) {
+            console.error('Error fetching bus schedules:', error);
+        }
+    };
 
     const searchBusSchedules = async () => {
         try {
@@ -195,7 +208,7 @@ export default function BusScheduleTable() {
                 </div>
             </div>
             <div className="button-group">
-                <button onClick={fetchAllBusSchedules}>All</button>
+                <button onClick={fetchBusSchedules}>All</button>
                 <button onClick={fetchUpcomingBusSchedules}>Upcoming</button>
                 <button onClick={fetchCompletedBusSchedules}>Completed</button>
                 <button onClick={fetchInTransitBusSchedules}>In-Transit</button>
@@ -262,10 +275,10 @@ export default function BusScheduleTable() {
                 </TableContainer>
             </div>
             {editData && (
-                <UpdateBusSchedule busSchedule={editData} onClose={handleClose} onSave={handleUpdate} />
+                <UpdateBusSchedule busSchedule={editData} onClose={handleClose} onSave={handleUpdate}  busStations={busStations} />
             )}
             {createBusScheduleOpen && (
-                <CreateBusSchedule onClose={handleClose} onCreate={handleCreate} />
+                <CreateBusSchedule onClose={handleClose} onCreate={handleCreate}  busStations={busStations}/>
             )}
             {deleteConfirm && (
                 <DeleteBusSchedule busScheduleId={deleteConfirm} onClose={handleClose} onDelete={confirmDelete} />
