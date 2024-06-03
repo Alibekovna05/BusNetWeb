@@ -5,100 +5,79 @@ import {
     UilUsersAlt,
     UilPackage,
     UilChart,
+    UilBusAlt,
+    UilLocationPinAlt,
 } from "@iconscout/react-unicons";
 
 
-import { UilUsdSquare, UilMoneyWithdrawal } from "@iconscout/react-unicons";
+import {  UilMoneyWithdrawal } from "@iconscout/react-unicons";
 
 
 
 import img1 from "../imgs/img1.png";
 import img2 from "../imgs/img2.png";
 import img3 from "../imgs/img3.png";
-import tenge from "../imgs/tenge.png";
 
-export const SidebarData = [
+// data.js
+
+export const adminSidebarData = [
     {
         icon: UilEstate,
         heading: "Dashboard",
-        path:"/dashboard"
+        path: "/dashboard"
     },
     {
         icon: UilClipboardAlt,
         heading: "Bookings",
-        path:"/bookings"
+        path: "/bookings"
     },
     {
         icon: UilUsersAlt,
         heading: "Users",
-        path:"/users"
+        path: "/users"
     },
     {
         icon: UilPackage,
         heading: 'Bus companies',
-        path:"/companies"
+        path: "/companies"
     },
     {
         icon: UilChart,
         heading: 'Bus Schedule',
-        path:"/schedule"
+        path: "/schedule"
     },
     {
         icon: UilMoneyWithdrawal,
         heading: 'Payment',
-        path:"/payment"
+        path: "/payment"
     },
 ];
 
-
-export const cardsData = [
+export const busCompanySidebarData = [
     {
-        title: "Sales",
-        color: {
-            backGround: "linear-gradient(180deg, #FFA07A 0%, #FF7F50 100%)", // Light orange gradient
-            boxShadow: "0px 10px 20px 0px rgba(255, 140, 102, 0.3)", // Soft shadow
-        },
-        barValue: 70,
-        value: "25,970",
-        png: UilUsdSquare,
-        series: [
-            {
-                name: "Sales",
-                data: [31, 40, 28, 51, 42, 109, 100],
-            },
-        ],
+        icon: UilEstate,
+        heading: "My Bus Company",
+        path: "/mybuscompany"
     },
     {
-        title: "Revenue",
-        color: {
-            backGround: "linear-gradient(180deg, #FFD700 0%, #FFA500 100%)", // Gold gradient
-            boxShadow: "0px 10px 20px 0px rgba(255, 215, 0, 0.3)", // Soft shadow
-        },
-        barValue: 80,
-        value: "14,270",
-        png: UilMoneyWithdrawal,
-        series: [
-            {
-                name: "Revenue",
-                data: [10, 100, 50, 70, 80, 30, 40],
-            },
-        ],
+        icon: UilBusAlt,
+        heading: "Buses",
+        path: "/buses"
     },
     {
-        title: "Expenses",
-        color: {
-            backGround: "linear-gradient(180deg, #FF6347 0%, #FF4500 100%)", // Tomato gradient
-            boxShadow: "0px 10px 20px 0px rgba(255, 99, 71, 0.3)", // Soft shadow
-        },
-        barValue: 60,
-        value: "4,270",
-        png: UilClipboardAlt,
-        series: [
-            {
-                name: "Expenses",
-                data: [10, 25, 15, 30, 12, 15, 20],
-            },
-        ],
+        icon: UilClipboardAlt,
+        heading: "Bookings",
+        path: "/bookings"
+    },
+    {
+        icon: UilChart,
+        heading: 'Bus Schedule',
+        path: "/schedule"
+    },
+    {
+        icon: UilLocationPinAlt,
+        heading: 'Bus stations',
+        path: "/stations"
     },
 ];
 

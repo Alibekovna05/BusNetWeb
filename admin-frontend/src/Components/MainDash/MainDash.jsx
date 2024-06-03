@@ -4,6 +4,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Cards from "../Cards/Cards";
 import styles from './MainDash.module.css';
 import { UilUsdSquare, UilMoneyWithdrawal, UilClipboardAlt } from "@iconscout/react-unicons";
+import tenge from "../../imgs/tenge.png";
 
 export default function MainDash() {
     const [payments, setPayments] = useState([]);
@@ -37,19 +38,12 @@ export default function MainDash() {
         const totalPaymentsSum = payments.reduce((acc, payment) => acc + payment.amount, 0);
         const pendingPayments = payments.filter(payment => payment.status === "PENDING");
         const completedPayments = payments.filter(payment => payment.status === "COMPLETED");
-        const failedPayments = payments.filter(payment => payment.status === "FAILED");
-        const refundedPayments = payments.filter(payment => payment.status === "REFUNDED");
-
         const pendingPaymentsSum = pendingPayments.reduce((acc, payment) => acc + payment.amount, 0);
         const completedPaymentsSum = completedPayments.reduce((acc, payment) => acc + payment.amount, 0);
-        const failedPaymentsSum = failedPayments.reduce((acc, payment) => acc + payment.amount, 0);
-        const refundedPaymentsSum = refundedPayments.reduce((acc, payment) => acc + payment.amount, 0);
-
         const totalPaymentsLength = payments.length;
         const pendingPaymentsLength = pendingPayments.length;
         const completedPaymentsLength = completedPayments.length;
-        const failedPaymentsLength = failedPayments.length;
-        const refundedPaymentsLength = refundedPayments.length;
+
 
         return [
             {
@@ -60,7 +54,7 @@ export default function MainDash() {
                 },
                 barValue: 100,
                 value: totalPaymentsSum.toFixed(2),
-                png: UilUsdSquare,
+                png: tenge,
                 series: [
                     {
                         name: "Payments",
@@ -100,6 +94,21 @@ export default function MainDash() {
                     },
                 ],
             },
+
+        ];
+    };
+
+    const transformFailAndRefundToCardData = (payments) => {
+        const failedPayments = payments.filter(payment => payment.status === "FAILED");
+        const refundedPayments = payments.filter(payment => payment.status === "REFUNDED");
+        const failedPaymentsSum = failedPayments.reduce((acc, payment) => acc + payment.amount, 0);
+        const refundedPaymentsSum = refundedPayments.reduce((acc, payment) => acc + payment.amount, 0);
+
+        const totalPaymentsLength = payments.length;
+        const failedPaymentsLength = failedPayments.length;
+        const refundedPaymentsLength = refundedPayments.length;
+
+        return [
             {
                 title: "Failed",
                 color: {
@@ -134,7 +143,6 @@ export default function MainDash() {
             },
         ];
     };
-
     if (loading) {
         return <CircularProgress />;
     }
@@ -142,7 +150,10 @@ export default function MainDash() {
     return (
         <div className={styles.MainDash}>
             <h1>Main Dashboard</h1>
-            <Cards cardsData={transformPaymentsToCardData(payments)} />
+            <h2>Payment</h2>
+            <Cards cardsData={transformPaymentsToCardData(payments)}/>
+            <h2>Failed and Refunded</h2>
+            <Cards cardsData={transformFailAndRefundToCardData(payments)}/>
         </div>
     );
 }

@@ -14,10 +14,16 @@ function Login() {
         try {
             const response = await axios.post("/api/v1/auth/authenticate", { email, password });
             // Store token in local storage upon successful login
-            const token = response.data.token;
+            const { token, role, busCompanyName } = response.data;
             localStorage.setItem("token", token);
             // Log token to console
             console.log("Token:", token);
+            //Save Role
+            localStorage.setItem("roles", role);
+            console.log("roles:", role);
+            //
+            localStorage.setItem("busCompanyName", busCompanyName);
+            console.log("Bus Company Name:", busCompanyName);
             // Redirect to dashboard or desired page upon successful login
             navigate("/dashboard"); // Use navigate instead of history.push
         } catch (error) {

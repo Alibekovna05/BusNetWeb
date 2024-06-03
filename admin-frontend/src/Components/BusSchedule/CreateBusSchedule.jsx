@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const CreateBusSchedule = ({ onCreate, onClose }) => {
+const CreateBusSchedule = ({ onCreate, onClose, busStations }) => {
     const [busScheduleData, setBusScheduleData] = useState({
         departTime: "",
         arrivalTime: "",
@@ -44,20 +44,30 @@ const CreateBusSchedule = ({ onCreate, onClose }) => {
                     value={busScheduleData.arrivalTime}
                     onChange={handleChange}
                 />
-                <input
-                    type="text"
+                <select
                     name="departStationId"
-                    placeholder="Depart Station ID"
                     value={busScheduleData.departStationId}
                     onChange={handleChange}
-                />
-                <input
-                    type="text"
+                >
+                    <option value="">Select Depart Station</option>
+                    {busStations.map(station => (
+                        <option key={station.id} value={station.id}>
+                            {station.name}
+                        </option>
+                    ))}
+                </select>
+                <select
                     name="arrivalStationId"
-                    placeholder="Arrival Station ID"
                     value={busScheduleData.arrivalStationId}
                     onChange={handleChange}
-                />
+                >
+                    <option value="">Select Arrival Station</option>
+                    {busStations.map(station => (
+                        <option key={station.id} value={station.id}>
+                            {station.name}
+                        </option>
+                    ))}
+                </select>
                 <input
                     type="text"
                     name="busId"

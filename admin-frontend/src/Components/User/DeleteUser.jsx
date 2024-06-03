@@ -17,7 +17,7 @@ const DeleteUser = ({ userId, handleDelete, handleClose }) => {
                 <p>Are you sure you want to delete User with ID {userId}?</p>
                 <input
                     type="text"
-                    value={userId} // Use the extracted user ID
+                    value={userId} // extracted user ID
                     onChange={handleChange}
                     style={{ display: "none" }}
                 />
